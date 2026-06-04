@@ -62,3 +62,9 @@ app.post("/products", async (req, res) => {
     res.json(product)
 })
 
+app.delete("/products/:id", async (req, res) => {
+    const { id } = await req.params
+    const product = await productModel.findByIdAndDelete(id)
+    res.json(product)
+})
+
