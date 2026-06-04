@@ -1,16 +1,31 @@
 // //server.js
-// import express from "express";
-// import mongoose from "mongoose";
-// import cors from "cors";
-// const app = express();
-// app.use(cors());
-// app.use(express.json());
-// async function startServer() {
-//   mongoose.connect("mongodb://localhost:27017/notesDB").then(() => {
-//     app.listen(5000, () => console.log("Server Started"));
-//   });
-// }
-// startServer();
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+const app = express();
+app.use(cors());
+app.use(express.json());
+async function startServer() {
+  mongoose.connect("mongodb://localhost:27017/mu26a").then(() => {
+    app.listen(5000, () => console.log("Server Started"));
+  });
+}
+startServer();
+
+const userSchema  = mongoose.Schema({
+    name:{type:String},
+    email:{type:String},
+    password:{type:String}
+})
+
+const userModel = mongoose.model("Users",userSchema)
+
+app.post("/users",async (req,res)=>{
+    const user = await userModel.create(req.body)
+    res.json(user)
+})
+
+
 
 // const noteSchema = new mongoose.Schema({
 //   text: { type: String },
@@ -31,40 +46,40 @@
 //   res.json({ message: "Note deleted" });
 // });
 
-import express from "express"
-import cors from "cors"
-import mongoose from "mongoose"
-const app = express()
-app.use(cors())
-app.use(express.json())
+// import express from "express"
+// import cors from "cors"
+// import mongoose from "mongoose"
+// const app = express()
+// app.use(cors())
+// app.use(express.json())
 
-const productSchema = mongoose.Schema({
-    name: { type: String },
-    price: { type: Number }
-})
+// const productSchema = mongoose.Schema({
+//     name: { type: String },
+//     price: { type: Number }
+// })
 
-const productModel = mongoose.model("products", productSchema)
+// const productModel = mongoose.model("products", productSchema)
 
-const startServer = async () => {
-    await mongoose.connect("mongodb://localhost:27017/mu26a")
-    app.listen(5000, () => console.log("Server Started"))
-}
+// const startServer = async () => {
+//     await mongoose.connect("mongodb://localhost:27017/mu26a")
+//     app.listen(5000, () => console.log("Server Started"))
+// }
 
-startServer()
+// startServer()
 
-app.get("/products", async (req, res) => {
-    const products = await productModel.find()
-    res.json(products)
-})
+// app.get("/products", async (req, res) => {
+//     const products = await productModel.find()
+//     res.json(products)
+// })
 
-app.post("/products", async (req, res) => {
-    const product = await productModel.create(req.body)
-    res.json(product)
-})
+// app.post("/products", async (req, res) => {
+//     const product = await productModel.create(req.body)
+//     res.json(product)
+// })
 
-app.delete("/products/:id", async (req, res) => {
-    const { id } = await req.params
-    const product = await productModel.findByIdAndDelete(id)
-    res.json(product)
-})
+// app.delete("/products/:id", async (req, res) => {
+//     const { id } = await req.params
+//     const product = await productModel.findByIdAndDelete(id)
+//     res.json(product)
+// })
 
