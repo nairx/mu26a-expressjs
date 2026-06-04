@@ -57,5 +57,8 @@ app.get("/products", async (req, res) => {
     res.json(products)
 })
 
-
+app.post("/products", async (req, res) => {
+    const product = await productModel.create(req.body)
+    res.json(product)
+})
 
