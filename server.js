@@ -1,4 +1,40 @@
-// // //server.js
+// //server.js
+import express from "express"
+import cors from "cors"
+import mongoose from "mongoose"
+const app = express()
+app.use(cors())
+app.use(express.json())
+
+const startServer = async () => {
+ await mongoose.connect("mongodb://localhost:27017/mu26a")
+ app.listen(5001,()=>console.log("Server Started"))
+}
+
+startServer()
+
+const orderSchema = mongoose.Schema({
+  items: [
+    {
+      name: String,
+      price: Number,
+      quantity: Number
+    }],
+  orderValue: Number
+})
+
+const orderModel = mongoose.model("orders", orderSchema)
+
+app.post("/orders", async (req, res) => {
+  const order = await orderModel.create(req.body)
+  res.json(order)
+})
+
+
+
+
+
+
 // import express from "express";
 // import mongoose from "mongoose";
 // import cors from "cors";
