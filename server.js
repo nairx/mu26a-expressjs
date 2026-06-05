@@ -1,29 +1,29 @@
-// //server.js
-import express from "express";
-import mongoose from "mongoose";
-import cors from "cors";
-const app = express();
-app.use(cors());
-app.use(express.json());
-async function startServer() {
-  mongoose.connect("mongodb://localhost:27017/mu26a").then(() => {
-    app.listen(5000, () => console.log("Server Started"));
-  });
-}
-startServer();
+// // //server.js
+// import express from "express";
+// import mongoose from "mongoose";
+// import cors from "cors";
+// const app = express();
+// app.use(cors());
+// app.use(express.json());
+// async function startServer() {
+//   mongoose.connect("mongodb://localhost:27017/mu26a").then(() => {
+//     app.listen(5000, () => console.log("Server Started"));
+//   });
+// }
+// startServer();
 
-const userSchema  = mongoose.Schema({
-    name:{type:String},
-    email:{type:String},
-    password:{type:String}
-})
+// const userSchema  = mongoose.Schema({
+//     name:{type:String},
+//     email:{type:String},
+//     password:{type:String}
+// })
 
-const userModel = mongoose.model("Users",userSchema)
+// const userModel = mongoose.model("Users",userSchema)
 
-app.post("/users",async (req,res)=>{
-    const user = await userModel.create(req.body)
-    res.json(user)
-})
+// app.post("/users",async (req,res)=>{
+//     const user = await userModel.create(req.body)
+//     res.json(user)
+// })
 
 
 
