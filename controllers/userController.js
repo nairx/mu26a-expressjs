@@ -27,6 +27,24 @@ const authUser = async (req, res) => {
         });
     }
 };
+
+const deleteUser = async (req, res) => {
+    try {
+        const {userId} = await req.params
+           const user = await userService.deleteUser(userId)
+        res.status(200).json({
+            success: true,
+            user: user
+        })
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        })
+    }
+}
+
 const createUser = async (req, res) => {
     try {
         const user = await userService.createUser(req.body);
@@ -41,4 +59,4 @@ const createUser = async (req, res) => {
         });
     }
 };
-export { authUser, getUsers, createUser }
+export { authUser, getUsers, createUser,deleteUser }

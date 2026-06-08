@@ -4,6 +4,11 @@ import jwt from "jsonwebtoken"
 const getUsers = async () => {
     return await User.find();
 };
+
+const deleteUser = async (userId) => {
+    return await User.findByIdAndDelete(userId)
+}
+
 const authUser = async (userData) => {
     const found = await User.findOne({ email: userData.email })
     if (found) {
@@ -26,4 +31,4 @@ const createUser = async (userData) => {
     userData.password = hashedPassword
     return await User.create(userData);
 };
-export { getUsers, createUser, authUser };
+export { getUsers, createUser, authUser,deleteUser };
