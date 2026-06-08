@@ -1,0 +1,29 @@
+import User from "../models/userModel.js"
+import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
+const getUsers = async () => {
+    return await User.find();
+};
+const authUser = async (userData) => {
+    const found = await User.findOne({ email: userData.email })
+    if (found) {
+        const chkPassword = await bcrypt.compare(userData.password, found.password)
+        if (chkPassword) {
+            const user = {
+                id: found._id,
+                name: found.name,
+                email: found.email,
+                role: found.role
+            }
+            const token = await jwt.sign(user, process.env.SECRET, { expiresIn: "1hr" })
+            return { ...user, token }
+        }
+
+    }
+};
+const createUser = async (userData) => {
+    const hashedPassword = await bcrypt.hash(userData.password, 10)
+    userData.password = hashedPassword
+    return await User.create(userData);
+};
+export { getUsers, createUser, authUser };

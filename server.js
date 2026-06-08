@@ -1,34 +1,76 @@
-// //server.js
-import express from "express"
-import cors from "cors"
-import mongoose from "mongoose"
-const app = express()
-app.use(cors())
-app.use(express.json())
+// server.js
+import app from "./app.js";
+import dotenv from "dotenv"
+import dbConnect from "./config/db.js";
+import seedAdmin from "./config/seedAdmin.js";
+dotenv.config()
+dbConnect();
+seedAdmin();
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
-const startServer = async () => {
- await mongoose.connect("mongodb://localhost:27017/mu26a")
- app.listen(5001,()=>console.log("Server Started"))
-}
 
-startServer()
 
-const orderSchema = mongoose.Schema({
-  items: [
-    {
-      name: String,
-      price: Number,
-      quantity: Number
-    }],
-  orderValue: Number
-})
+// import express from "express"
+// import cors from "cors"
+// import mongoose from "mongoose"
+// const app = express()
+// app.use(cors())
+// app.use(express.json())
+// const startServer = async () => {
+//   await mongoose.connect("mongodb://localhost:27017/mustore")
+//   app.listen(5000, () => console.log("Server Started"))
+// }
+// startServer()
+// const userSchema = mongoose.Schema({
+//   name: String,
+//   email: { type: String, unique: true },
+//   password: String
+// })
+// const userModel = mongoose.model("users", userSchema)
+// app.post("/users/register", async (req, res) => {
+//   const user = await userModel.create(req.body)
+//   res.json(user)
+// })
+// app.post("/users/login", async (req, res) => {
+//   const { email, password } = req.body
+//   const user = await userModel.findOne({ email, password })
+//   res.json(user)
+// })
 
-const orderModel = mongoose.model("orders", orderSchema)
+// // //server.js
+// import express from "express"
+// import cors from "cors"
+// import mongoose from "mongoose"
+// const app = express()
+// app.use(cors())
+// app.use(express.json())
 
-app.post("/orders", async (req, res) => {
-  const order = await orderModel.create(req.body)
-  res.json(order)
-})
+// const startServer = async () => {
+//  await mongoose.connect("mongodb://localhost:27017/mu26a")
+//  app.listen(5001,()=>console.log("Server Started"))
+// }
+
+// startServer()
+
+// const orderSchema = mongoose.Schema({
+//   items: [
+//     {
+//       name: String,
+//       price: Number,
+//       quantity: Number
+//     }],
+//   orderValue: Number
+// })
+
+// const orderModel = mongoose.model("orders", orderSchema)
+
+// app.post("/orders", async (req, res) => {
+//   const order = await orderModel.create(req.body)
+//   res.json(order)
+// })
 
 
 
