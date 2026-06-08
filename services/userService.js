@@ -1,6 +1,15 @@
 import User from "../models/userModel.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+
+const getUser = async (userId) => {
+    return await User.findOne({ _id: userId })
+}
+
+const updateUser = async (userId,userData) => {
+    return await User.findByIdAndUpdate(userId,userData)
+}
+
 const getUsers = async () => {
     return await User.find();
 };
@@ -31,4 +40,4 @@ const createUser = async (userData) => {
     userData.password = hashedPassword
     return await User.create(userData);
 };
-export { getUsers, createUser, authUser,deleteUser };
+export { getUsers, createUser, authUser, deleteUser,getUser,updateUser };
