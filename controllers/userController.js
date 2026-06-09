@@ -32,8 +32,6 @@ const getUser = async (req, res) => {
             message: error.message
         })
     }
-
-
 }
 
 const getUsers = async (req, res) => {
