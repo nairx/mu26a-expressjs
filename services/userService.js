@@ -1,8 +1,9 @@
 import User from "../models/userModel.js"
 import bcrypt from "bcrypt"
+import dotenv from "dotenv"
 import jwt from "jsonwebtoken"
-const SECRET = "mysecret"
-
+dotenv.config()
+const SECRET = process.env.SECRET
 const getUser = async (userId) => {
     return await User.findOne({ _id: userId })
 }

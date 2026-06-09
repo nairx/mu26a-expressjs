@@ -1,9 +1,10 @@
 import jwt from "jsonwebtoken";
-const SECRET = "mysecret"
+import dotenv from "dotenv"
+dotenv.config()
+const SECRET = process.env.SECRET
 const authenticate = (req, res, next) => {
   const authHeader = req.headers.authorization;
   try {
-      console.log(authHeader)
     const token = authHeader.split(" ")[1];
     const user = jwt.verify(token, SECRET);
     req.user = user;
