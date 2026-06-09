@@ -1,6 +1,7 @@
 import User from "../models/userModel.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+const SECRET = "mysecret"
 
 const getUser = async (userId) => {
     return await User.findOne({ _id: userId })
@@ -29,13 +30,14 @@ const authUser = async (userData) => {
                 email: found.email,
                 role: found.role
             }
-            const token = await jwt.sign(user, process.env.SECRET, { expiresIn: "1hr" })
+            const token = await jwt.sign(user, SECRET, { expiresIn: "1hr" })
             return { ...user, token }
         }
 
     }
 };
 const createUser = async (userData) => {
+    console.log(userData)
     const hashedPassword = await bcrypt.hash(userData.password, 10)
     userData.password = hashedPassword
     return await User.create(userData);
