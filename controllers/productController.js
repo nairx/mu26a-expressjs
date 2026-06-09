@@ -63,6 +63,10 @@ const updateProduct = async (req, res) => {
     try {
         const { productId } = await req.params
         const product = await productService.updateProduct(productId, req.body)
+        res.status(200).json({
+            success:true,
+            product:product
+        })
     }
     catch (error) {
         res.status(500).json({
